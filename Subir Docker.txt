@@ -1,0 +1,11 @@
+sudo systemctl status docker
+sudo systemctl start docker
+
+docker network create frontend-backend-network
+docker build -t backend .
+docker build -t frontend .
+docker run -d --name backend-container --network frontend-backend-network -p 25000:25000 backend
+docker run -d --name frontend-container --network frontend-backend-network -p 8080:80 frontend
+
+docker start backend-container
+docker start frontend-container
